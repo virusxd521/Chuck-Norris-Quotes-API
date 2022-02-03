@@ -1,6 +1,7 @@
 const wrapper = document.querySelector('.wrapper');
 const button =  document.querySelector(".button");
 
+let clicked = 0;
 // Created a variable to capture the URL
 const urlToAskFrom = "https://api.chucknorris.io/jokes/random";
 
@@ -39,13 +40,14 @@ class Creating {
     events(element, event){
         element.addEventListener(event, () => {
             const elements = this.creatingElements();
-            console.log(wrapper.children.length);
-            if(wrapper.children.length <= 2){
-                wrapper.append(...elements);
-            } else {
-                elements.forEach(item => item.remove());
-                this.events(element, event);
-            }
+            wrapper.append(...elements);
+            const arr = [...wrapper.children];        
+            arr.forEach(item => {
+                if(item.tagName === "IMG" || item.tagName === "P"){
+                    item.remove();
+                }
+            });
+            wrapper.append(...elements);
         })
     }
 
